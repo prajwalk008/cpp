@@ -49,7 +49,7 @@ class LinkedList{
         } else{
             Node* temp=head;
             bool flag=false;
-            while(temp->next!=NULL){
+            while(temp!=NULL){
                 if(temp->data!=y){
                     temp=temp->next;
                 } else{
@@ -75,7 +75,7 @@ class LinkedList{
             Node* temp=head;
             Node* pretemp= temp;
             bool flag= false;
-            while(temp->next!=NULL){
+            while(temp!=NULL){
                 if(temp->data!=y){
                     pretemp=temp;
                     temp=temp->next;
@@ -83,14 +83,19 @@ class LinkedList{
                     flag=true;
                     break;
                 }
-                if(flag){
-                    Node* newnode= new Node(x);
-                    pretemp->next= newnode;
-                    newnode->next= temp;
-                    cout<<x<<" inserted Before "<<y<<endl;
-                } else{
-                    cout<<"No node of "<< y <<" found!"<<endl;
-                }
+            }
+            if(flag && temp!=pretemp){
+                Node* newnode= new Node(x);
+                pretemp->next= newnode;
+                newnode->next= temp;
+                cout<<x<<" inserted Before "<<y<<endl;
+            } else if(flag && temp==pretemp){
+                Node* newnode= new Node(x);
+                newnode->next= head;
+                head= newnode;
+                cout<<x<<" inserted Before "<<y<<endl;
+            } else{
+                cout<<"No node of "<< y <<" found!"<<endl;
             }
         }
     }
@@ -102,7 +107,7 @@ class LinkedList{
             cout<<x<<" inserted at start!"<<endl;
         } else{
             Node* newnode= new Node(x);
-            newnode->next= head->next;
+            newnode->next= head;
             head= newnode;
             cout<<x<<" inserted at start!"<<endl;
         }
@@ -184,8 +189,9 @@ class LinkedList{
                 deleteAtStart();
                 return;
             } else{
-                pretemp->next=temp->next;
-                delete temp;
+                pretemp->next=temp;
+                pretemp=pretemp->next;
+                delete pretemp;
                 cout<<"Node before "<<y<< " deleted succesfully!"<<endl;
             }
 
@@ -211,6 +217,7 @@ class LinkedList{
             if(flag){
                 pretemp->next=temp->next;
                 delete temp;
+                cout<<"Element "<<x<<" deleted!"<<endl;
             } else{
                 cout<<"No node with "<< x<<" as an element!"<<endl;
             }
@@ -240,24 +247,37 @@ class LinkedList{
 int main(){
     LinkedList X;
     X.insertNode(6);
-    X.printList();
     X.insertNode(7);
-    X.printList();
     X.insertNode(8);
-    X.printList();
     X.insertAfter(6,9);
-    X.printList();
     X.insertAtStart(5);
-    X.printList();
     X.insertBefore(6,10);
-    X.printList();
     X.insertAfter(8,11);
-    X.printList();
     X.insertBefore(5,4);
-    X.printList();
     X.insertAfter(12,13);
-    X.printList();
     X.insertBefore(14,12);
     X.printList();
-    
+    X.deleteNode();
+    X.printList();
+    X.deleteEle(5);
+    X.printList();
+    X.deleteEle(13);
+    X.printList();
+    X.deleteAfter(10);
+    X.printList(); 
+    X.deleteAfter(11);
+    X.printList();
+    X.deleteAfter(14);
+    X.printList();
+    X.deleteAtStart();
+    X.printList();
+    X.deleteBefore(7);
+    X.printList();
+    X.deleteBefore(14);
+    X.printList();
+    X.deleteBefore(4);
+    X.printList();
+    X.deleteBefore(5);
+    X.printList();
+
 }
